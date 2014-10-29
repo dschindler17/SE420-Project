@@ -5,7 +5,16 @@
 
 #include "brighten.h"
 
-
+//Read .ppm file from disk into memory
+//
+//Function will...
+//
+//PRECONDITIONS
+//
+// 
+//POSTCONDITIONS
+//
+//
 void readppm(unsigned char *buffer, int *bufferlen, 
              char *header, int *headerlen,
              unsigned *rows, unsigned *cols, unsigned *chans,
@@ -68,6 +77,16 @@ void readppm(unsigned char *buffer, int *bufferlen,
     close(filep);
 }
 
+//Write .ppm file from memory into disk
+//
+//Function will...
+//
+//PRECONDITIONS
+//
+// 
+//POSTCONDITIONS
+//
+//
 
 void writeppm(unsigned char *buffer, int bufferlen,
               char *header, int headerlen,
@@ -122,6 +141,17 @@ void writeppm(unsigned char *buffer, int bufferlen,
 
 #define PIXIDX ((i*col*chan)+(j*chan)+k)
 
+
+//Transform brightness and contrast of .ppm buffer
+//
+//Function will...
+//
+//PRECONDITIONS
+//
+// 
+//POSTCONDITIONS
+//
+//
 void scaleImage(unsigned char *img, unsigned char *newimg, unsigned row, unsigned col, unsigned chan,
                 double alpha, double beta)
 {

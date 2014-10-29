@@ -19,4 +19,6 @@ void writeppm(unsigned char *buffer, int bufferlen,
 
 void scaleImage(unsigned char *img, unsigned char *newimg, unsigned row, unsigned col, unsigned chan, double alpha, double beta);
 
+void luminGray(unsigned char *img, unsigned char *newimg, unsigned row, unsigned col, unsigned chan);
+
 #endif
