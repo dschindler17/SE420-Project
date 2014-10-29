@@ -11,11 +11,11 @@
 void readppm(unsigned char *buffer, int *bufferlen, 
              char *header, int *headerlen,
              unsigned *rows, unsigned *cols, unsigned *chans,
-             char *file);
+             char *file, int debug);
 
 void writeppm(unsigned char *buffer, int bufferlen,
               char *header, int headerlen,
-              char *file);
+              char *file, int debug);
 
 void scaleImage(unsigned char *img, unsigned char *newimg, unsigned row, unsigned col, unsigned chan, double alpha, double beta);
 

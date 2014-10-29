@@ -7,7 +7,7 @@ CFLAGS= -O0 -g $(INCLUDE_DIRS) $(CDEFS)
 LIBS=
 
 HFILES=  brighten.h
-CFILES= imagetest.c brighten.c
+CFILES= imagetest.c brighten.c luminosityGray.c
 
 SRCS= ${HFILES} ${CFILES}
 OBJS= ${CFILES:.c=.o}
@@ -15,7 +15,7 @@ OBJS= ${CFILES:.c=.o}
 all:	imagetest brightc.asm
 
 clean:
-	-rm -f *.o *.d brighter*.ppm brightc.asm
+	-rm -f *.o *.d brighter*.ppm brightc.asm gray*.ppm
 	-rm -f imagetest
 
 distclean:

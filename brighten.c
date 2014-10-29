@@ -9,7 +9,7 @@
 void readppm(unsigned char *buffer, int *bufferlen, 
              char *header, int *headerlen,
              unsigned *rows, unsigned *cols, unsigned *chans,
-             char *file)
+             char *file, int debug)
 {
     char *aline=NULL;  size_t linelen; FILE *filep;
     char magic[2]; unsigned col, row, sat, channels=3;
@@ -42,9 +42,11 @@ void readppm(unsigned char *buffer, int *bufferlen,
     sscanf(aline, "%u", &sat);
     strcat(header, aline);
 
-    printf("%s", header);
-
-    printf("read %d bytes, buffer=%p, toread=%d\n", nread, buffer, toread);
+	if(debug == 1)
+	{
+      printf("%s", header);
+      printf("read %d bytes, buffer=%p, toread=%d\n", nread, buffer, toread);
+	}
 
     do
     {
@@ -58,7 +60,8 @@ void readppm(unsigned char *buffer, int *bufferlen,
 
         buffer+=nread;
         toread=toread-nread;
-        printf("read %d bytes, buffer=%p, toread=%d\n", nread, buffer, toread);
+		if(debug ==1)
+          printf("read %d bytes, buffer=%p, toread=%d\n", nread, buffer, toread);
     } while(toread > 0 && (!feof(filep)));
 
     printf("readppm done\n\n");
@@ -68,14 +71,15 @@ void readppm(unsigned char *buffer, int *bufferlen,
 
 void writeppm(unsigned char *buffer, int bufferlen,
               char *header, int headerlen,
-              char *file)
+              char *file, int debug)
 {
     FILE *filep;
     int nwritten=0, towrite=0;
 
     filep=fopen(file, "w");
-
-    printf("wrote %d bytes, header=%p, towrite=%d\n", nwritten, header, towrite);
+    
+	if(debug ==1)
+      printf("wrote %d bytes, header=%p, towrite=%d\n", nwritten, header, towrite);
 
     do
     {
@@ -89,11 +93,13 @@ void writeppm(unsigned char *buffer, int bufferlen,
 
         header+=nwritten;
         towrite=towrite-nwritten;
-        printf("wrote %d bytes, header=%p, towrite=%d\n", nwritten, header, towrite);
+		if(debug == 1)
+          printf("wrote %d bytes, header=%p, towrite=%d\n", nwritten, header, towrite);
     } while(towrite > 0);
     towrite=0; nwritten=0;
 
-    printf("wrote %d bytes, buffer=%p, towrite=%d\n", nwritten, buffer, towrite);
+	if(debug ==1)
+      printf("wrote %d bytes, buffer=%p, towrite=%d\n", nwritten, buffer, towrite);
     do
     {
         if((nwritten=fwrite(buffer, 1, bufferlen, filep)) == 0)
@@ -106,7 +112,8 @@ void writeppm(unsigned char *buffer, int bufferlen,
 
         buffer+=nwritten;
         towrite=towrite-nwritten;
-        printf("wrote %d bytes, buffer=%p, towrite=%d\n", nwritten, buffer, towrite);
+		if(debug == 1)
+          printf("wrote %d bytes, buffer=%p, towrite=%d\n", nwritten, buffer, towrite);
     } while(towrite > 0);
 
     close(filep);
@@ -127,8 +134,7 @@ void scaleImage(unsigned char *img, unsigned char *newimg, unsigned row, unsigne
     for(j=0; j < col; j++)
       for(k=0; k < chan; k++)
       {
-          newimg[PIXIDX] = (pix=(unsigned)((img[PIXIDX])*alpha)+beta) > SAT ? SAT : pix;
+        newimg[PIXIDX] = (pix=(unsigned)((img[PIXIDX])*alpha)+beta) > SAT ? SAT : pix;
       }
-
 #endif
 }
