@@ -3,44 +3,36 @@
 #include <ctype.h>
 #include <string.h>
 
-#include "brighten.h"
 
-
-void pipeline(unsigned char *img, unsigned char *newimg, unsigned row, unsigned col, unsigned chan, char *argv[])
+unsigned char  pipeline(unsigned char **buffer, unsigned row, unsigned col, unsigned chan, char *pipeString)
 {
-  unsigned char imgMed[4080*1024];
-  char pipeOption;
-  int pipeCount, argc = sizeof(*argv)/sizeof(argv[0]), radius; 
-  double alpha;  unsigned char beta;
-
-  for(pipeCount = 1; pipeCount <= argc; pipeCount++)
-  { 
-    pipeOption = ((int)argv[pipeCount] - 48); 
-    switch (pipeOption) 
-    {
-                    case 1:
-					        if (pipeCount == 0)
-                              luminGray(img, newimg, row, col, chan);
-							else if (pipeCount%2 == 0)
-							  luminGray(newimg, imgMed, row, col, chan);
-							else
-							  luminGray(imgMed,newimg, row, col, chan);
-                            break;
-                    case 2:
-                            printf("Enter the radius of the blur:");
-                            scanf("%d", &radius);
-                            if (pipeCount == 0)
-                              blur(img, newimg, row, col, chan, radius);
-							else if (pipeCount%2 == 0)
-							  blur(newimg, imgMed, row, col, chan, radius);
-							else 
-							  blur(imgMed, newimg, row, col, chan, radius); 
-                            break;
-                    default:
-                            printf("U have entered wrong option!!\n");
-                            break;
-    }
-  }
-  if (pipeCount%2 != 0)
-    newimg = imgMed; 
+   int pipeStringIndex = 0, radius;
+   unsigned char newBuffer[4080 * 1024], *temp;
+   printf("%s",*pipeString);
+   while(pipeString[pipeStringIndex] != NULL)
+   {
+      if (pipeString[pipeStringIndex] == '1')
+	  {
+	     luminGray(buffer,newBuffer,row, col, chan);
+		 printf("\nGrayscale completed successfully\n");
+	  }
+      else if (pipeString[pipeStringIndex] == '2')
+	  {
+	     printf("\nPlease enter radius for blur: ");
+		 scanf(" %d", &radius);
+		 blur(buffer, newBuffer, row, col, chan, radius);
+		 printf("\nBlur completed successfully\n");
+	  }
+	  else if (pipeString[pipeStringIndex] == ',')
+	  {
+	  
+	  }
+	  else
+	    printf("\nIncorrect input, please enter only 1,2,3 or ,");
+	  temp = (*buffer);
+	  (*buffer) = newBuffer; 
+	  *newBuffer = temp;
+	  pipeStringIndex++;
+   }
+   return buffer;
 }

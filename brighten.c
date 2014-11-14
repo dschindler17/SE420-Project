@@ -134,37 +134,10 @@ void writeppm(unsigned char *buffer, int bufferlen,
 		if(debug == 1)
           printf("wrote %d bytes, buffer=%p, towrite=%d\n", nwritten, buffer, towrite);
     } while(towrite > 0);
-
+    printf("writeppm done.\n");
     close(filep);
 }
 
 
 #define PIXIDX ((i*col*chan)+(j*chan)+k)
 
-
-//Transform brightness and contrast of .ppm buffer
-//
-//Function will...
-//
-//PRECONDITIONS
-//
-// 
-//POSTCONDITIONS
-//
-//
-void scaleImage(unsigned char *img, unsigned char *newimg, unsigned row, unsigned col, unsigned chan,
-                double alpha, double beta)
-{
-  int unsigned pix;
-  int i, j, k;
-
-#define BASIC_BLOCK
-#ifdef BASIC_BLOCK
-  for(i=0; i < row; i++)
-    for(j=0; j < col; j++)
-      for(k=0; k < chan; k++)
-      {
-        newimg[PIXIDX] = (pix=(unsigned)((img[PIXIDX])*alpha)+beta) > SAT ? SAT : pix;
-      }
-#endif
-}

@@ -19,6 +19,7 @@ void main(int argc, char *argv[])
   int bufflen2, hdrlen2; unsigned row2=0, col2=0, chan2=0, pix2;
   int bufflen3, hdrlen3; unsigned row3=0, col3=0, chan3=0, pix3;
   double alpha=1.25;  unsigned char beta=25;
+  int radius; 
 
 
   // TEST CASE #0
@@ -46,23 +47,47 @@ void main(int argc, char *argv[])
   //
   // Basic PPM file read, convert to gray scale, and write-back
   //
+  // header[0]='\0';
+  // header2[0]='\0';
+  // header3[0]='\0';
+  
+  // readppm(img, &bufflen, header, &hdrlen, &row, &col, &chan, "Baby-Musk-Ox.ppm", 0);
+  // luminGray(img, newimg, row, col, chan);
+  // writeppm(newimg, bufflen, header, hdrlen, "OxGray.ppm", 0);
+  
+  // readppm(img2, &bufflen2, header2, &hdrlen2, &row2, &col2, &chan2, "Black-Shiba-Inu.ppm", 0);
+  // luminGray(img2, newimg2, row2, col2, chan2);
+  // writeppm(newimg2, bufflen2, header2, hdrlen2, "ShibaGray.ppm", 0);
+
+  // readppm(img3, &bufflen3, header3, &hdrlen3, &row3, &col3, &chan3, "Moose-Earthquake-Park.ppm", 0);
+  // luminGray(img3, newimg3, row3, col3, chan3);
+  // writeppm(newimg3, bufflen3, header3, hdrlen3, "MooseGray.ppm", 0);
+
+  //
+  // END TEST CASE #1
+  
+  // TEST CASE #2
+  //
+  // Basic PPM file read, blur transform, and write-back
+  //
   header[0]='\0';
   header2[0]='\0';
   header3[0]='\0';
   
+  radius = 5;
   readppm(img, &bufflen, header, &hdrlen, &row, &col, &chan, "Baby-Musk-Ox.ppm", 0);
-  luminGray(img, newimg, row, col, chan);
-  writeppm(newimg, bufflen, header, hdrlen, "OxGray.ppm", 0);
+  blur(img, newimg, row, col, chan, radius);
+  writeppm(newimg, bufflen, header, hdrlen, "OxBlur.ppm", 0);
   
   readppm(img2, &bufflen2, header2, &hdrlen2, &row2, &col2, &chan2, "Black-Shiba-Inu.ppm", 0);
-  luminGray(img2, newimg2, row2, col2, chan2);
-  writeppm(newimg2, bufflen2, header2, hdrlen2, "ShibaGray.ppm", 0);
+  blur(img2, newimg2, row2, col2, chan2, radius);
+  writeppm(newimg2, bufflen2, header2, hdrlen2, "ShibaBlur.ppm", 0);
 
   readppm(img3, &bufflen3, header3, &hdrlen3, &row3, &col3, &chan3, "Moose-Earthquake-Park.ppm", 0);
-  luminGray(img3, newimg3, row3, col3, chan3);
-  writeppm(newimg3, bufflen3, header3, hdrlen3, "MooseGray.ppm", 0);
+  blur(img3, newimg3, row3, col3, chan3, radius);
+  writeppm(newimg3, bufflen3, header3, hdrlen3, "MooseBlur.ppm", 0);
 
   //
-  // END TEST CASE #1
+  // END TEST CASE #2
 
 }
