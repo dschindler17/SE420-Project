@@ -24,7 +24,7 @@ void readLatencyTest()
   // Basic PPM file read test
   //
   printf("Read Latency Test\n");
-  for(caseNumber = 1; caseNumber < 50; caseNumber++)
+  for(caseNumber = 1; caseNumber < 11; caseNumber++)
   {
     gettimeofday(&StartTime, 0);
     memset(header, 0, sizeof(header));
@@ -35,10 +35,7 @@ void readLatencyTest()
 	row = 0;
 	col = 0;
     header[0]='\0';
-	if(caseNumber > 10)
-	  caseNumber = caseNumber%10;
-	if(caseNumber == 0)
-	  caseNumber++;
+
     switch (caseNumber) {
 	
 	case 1:
