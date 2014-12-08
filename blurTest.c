@@ -3,49 +3,117 @@
 #include <ctype.h>
 #include <string.h>
 
-#include "brighten.h"
+#include "eagleEye.h"
 
-//Gray-Scale Test
+//Blur Test
 //This test will take three .ppm images and read them in, transform them to their blurred counterpart
 //according to the blur function and write back to new .ppm image files the results of the transform.
 //The test will only utilize a single radius, set at 5, to perform the transform. 
-void main(int argc, char *argv[])
+void blurTest(int argc, char *argv[])
 {
-  char header[512];
-  char header2[512];
-  char header3[512];
-  unsigned char img[1024*1024], newimg[1024*1024*2];
-  unsigned char img2[1024*1024], newimg2[1024*1024*2];
-  unsigned char img3[1024*1024], newimg3[1024*1024*2];
+  char header[1024];
+  unsigned char img[2500*2500], newimg[2500*2500];
+
   
   int bufflen, hdrlen; unsigned row=0, col=0, chan=0, pix;
-  int bufflen2, hdrlen2; unsigned row2=0, col2=0, chan2=0, pix2;
-  int bufflen3, hdrlen3; unsigned row3=0, col3=0, chan3=0, pix3;
-  double alpha=1.25;  unsigned char beta=25;
-  int radius; 
+  int radius, caseNumber =0; 
 
   
   // TEST CASE #0
   //
   // Basic PPM file read, blur transform, and write-back
   //
-  header[0]='\0';
-  header2[0]='\0';
-  header3[0]='\0';
-  
-  radius = 5;
-  readppm(img, &bufflen, header, &hdrlen, &row, &col, &chan, "Baby-Musk-Ox.ppm", 0);
-  blur(img, newimg, row, col, chan, radius);
-  writeppm(newimg, bufflen, header, hdrlen, "OxBlur.ppm", 0);
-  
-  readppm(img2, &bufflen2, header2, &hdrlen2, &row2, &col2, &chan2, "Black-Shiba-Inu.ppm", 0);
-  blur(img2, newimg2, row2, col2, chan2, radius);
-  writeppm(newimg2, bufflen2, header2, hdrlen2, "ShibaBlur.ppm", 0);
-
-  readppm(img3, &bufflen3, header3, &hdrlen3, &row3, &col3, &chan3, "Moose-Earthquake-Park.ppm", 0);
-  blur(img3, newimg3, row3, col3, chan3, radius);
-  writeppm(newimg3, bufflen3, header3, hdrlen3, "MooseBlur.ppm", 0);
-
+  printf("Blur Module Test");
+ 
+  for(caseNumber = 1, radius = 1; caseNumber < 11; caseNumber++, radius++)
+  {
+    memset(header, 0, sizeof(header));
+    memset(img, 0, sizeof(img));
+    memset(newimg,0,sizeof(newimg));
+	bufflen = 0;
+	hdrlen = 0;
+	row = 0;
+	col = 0;
+    header[0]='\0';
+    switch (caseNumber) {
+	
+	case 1:
+	  readppm(img, &bufflen, header, &hdrlen, &row, &col, &chan, "SampleImage1.ppm", 0);
+	  blur(img, newimg, row, col, chan, radius);
+      writeppm(newimg, bufflen, header, hdrlen, "BlurTestImage1.ppm", 0);
+	  printf("\nTest Case 1 Completed");
+	  break;
+	  
+	case 2:
+	  readppm(img, &bufflen, header, &hdrlen, &row, &col, &chan, "SampleImage2.ppm", 0);
+	  blur(img, newimg, row, col, chan, radius);
+      writeppm(newimg, bufflen, header, hdrlen, "BlurTestImage2.ppm", 0);
+	  printf("\nTest Case 2 Completed");
+	  break;
+	  
+	case 3:
+	  readppm(img, &bufflen, header, &hdrlen, &row, &col, &chan, "SampleImage3.ppm", 0);
+	  blur(img, newimg, row, col, chan, radius);
+      writeppm(newimg, bufflen, header, hdrlen, "BlurTestImage3.ppm", 0);
+	  printf("\nTest Case 3 Completed");
+	  break;
+	  
+	case 4:
+	  readppm(img, &bufflen, header, &hdrlen, &row, &col, &chan, "SampleImage4.ppm", 0);
+	  blur(img, newimg, row, col, chan, radius);
+      writeppm(newimg, bufflen, header, hdrlen, "BlurTestImage4.ppm", 0);
+	  printf("\nTest Case 4 Completed");
+	  break;
+	  
+	case 5:
+	  readppm(img, &bufflen, header, &hdrlen, &row, &col, &chan, "SampleImage5.ppm", 0);
+	  blur(img, newimg, row, col, chan, radius);
+      writeppm(newimg, bufflen, header, hdrlen, "BlurTestImage5.ppm", 0);
+	  printf("\nTest Case 5 Completed");
+	  break;
+	 
+	case 6:
+	  radius = radius%5;
+	  readppm(img, &bufflen, header, &hdrlen, &row, &col, &chan, "SampleImage6.ppm", 0);
+	  blur(img, newimg, row, col, chan, radius);
+      writeppm(newimg, bufflen, header, hdrlen, "BlurTestImage6.ppm", 0);
+	  printf("\nTest Case 6 Completed");
+	  break;
+	  
+	case 7:
+	  radius = radius%5;
+	  readppm(img, &bufflen, header, &hdrlen, &row, &col, &chan, "SampleImage7.ppm", 0);
+	  blur(img, newimg, row, col, chan, radius);
+      writeppm(newimg, bufflen, header, hdrlen, "BlurTestImage7.ppm", 0);
+	  printf("\nTest Case 7 Completed");
+	  break;
+	  
+	case 8:
+	  radius = radius%5;
+	  readppm(img, &bufflen, header, &hdrlen, &row, &col, &chan, "SampleImage8.ppm", 0);
+	  blur(img, newimg, row, col, chan, radius);
+      writeppm(newimg, bufflen, header, hdrlen, "BlurTestImage8.ppm", 0);
+	  printf("\nTest Case 8 Completed");
+	  break;
+	  
+	case 9:
+	  radius = radius%5;
+	  readppm(img, &bufflen, header, &hdrlen, &row, &col, &chan, "SampleImage9.ppm", 0);
+	  blur(img, newimg, row, col, chan, radius);
+      writeppm(newimg, bufflen, header, hdrlen, "BlurTestImage9.ppm", 0);
+	  printf("\nTest Case 9 Completed");
+	  break;
+	  
+	case 10:
+	  radius = radius%5 + 1;
+	  readppm(img, &bufflen, header, &hdrlen, &row, &col, &chan, "SampleImage10.ppm", 0);
+	  blur(img, newimg, row, col, chan, radius);
+      writeppm(newimg, bufflen, header, hdrlen, "BlurTestImage10.ppm", 0);
+	  printf("\nTest Case 10 Completed");
+	  break;
+	  
+    }
+  }
   //
   // END TEST CASE #2
   

@@ -8,6 +8,7 @@
 
 #define SAT (255)
 
+//Prototypes for modules
 void readppm(unsigned char *buffer, int *bufferlen, 
              char *header, int *headerlen,
              unsigned *rows, unsigned *cols, unsigned *chans,
@@ -24,9 +25,14 @@ void blur(unsigned char *img, unsigned char *newimg, unsigned row, unsigned col,
 
 unsigned char pipeline(unsigned char *img, unsigned char *newimg, unsigned row, unsigned col, unsigned chan, char *pipeString);
 
+//Prototypes for Acceptance Tests
 void blurTest();
 void grayTest();
 void pipeTest();
 void readLatencyTest();
+void transformLatencyTest();
+void readWriteTest();
+void invalidLocation();
+void invalidType();
 
 #endif

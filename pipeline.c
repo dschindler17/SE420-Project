@@ -4,35 +4,34 @@
 #include <string.h>
 
 
-unsigned char  pipeline(unsigned char **buffer, unsigned row, unsigned col, unsigned chan, char *pipeString)
+void  pipeline(unsigned char *buffer, unsigned char *newBuffer, unsigned row, unsigned col, unsigned chan, char *pipeString)
 {
    int pipeStringIndex = 0, radius;
-   unsigned char newBuffer[4080 * 1024], *temp;
-   printf("%s",*pipeString);
-   while(pipeString[pipeStringIndex] != NULL)
+   while(pipeString[pipeStringIndex] !=  '.')
    {
       if (pipeString[pipeStringIndex] == '1')
 	  {
 	     luminGray(buffer,newBuffer,row, col, chan);
-		 printf("\nGrayscale completed successfully\n");
+		 printf("\nGrayscale completed successfully");
 	  }
       else if (pipeString[pipeStringIndex] == '2')
 	  {
 	     printf("\nPlease enter radius for blur: ");
 		 scanf(" %d", &radius);
 		 blur(buffer, newBuffer, row, col, chan, radius);
-		 printf("\nBlur completed successfully\n");
+		 printf("Blur completed successfully");
 	  }
 	  else if (pipeString[pipeStringIndex] == ',')
 	  {
-	  
+   
 	  }
 	  else
-	    printf("\nIncorrect input, please enter only 1,2,3 or ,");
-	  temp = (*buffer);
-	  (*buffer) = newBuffer; 
-	  *newBuffer = temp;
+	    printf("\nIncorrect input, please enter only 1,2, or .");
 	  pipeStringIndex++;
+	  if(pipeString[pipeStringIndex + 1] != '.')
+	  {
+	    memcpy(buffer,newBuffer,sizeof(buffer));
+	    memset(newBuffer,0,sizeof(newBuffer));
+	  }
    }
-   return buffer;
 }

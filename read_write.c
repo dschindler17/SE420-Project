@@ -26,12 +26,22 @@ void readppm(unsigned char *buffer, int *bufferlen,
     *headerlen=0;
 
     filep=fopen(file, "r");
+	if(filep == NULL)
+	{
+	  printf("\nNo such file.");
+	  return;
+	}
 
     // read and validate header
     if((*headerlen += getline(&aline, &linelen, filep)) < 0)
         {perror("getline"); exit(-1);}
     strcat(header, aline);
     sscanf(aline, "%s", magic);
+	if(magic[0] != 'P')
+	{
+	  printf("\nInvalid Image Type.");
+	  return;
+	}
     if(strncmp(magic, "P6", 2) == 0) channels=3; else channels=1;
 
     // ignore comment line or print for debug

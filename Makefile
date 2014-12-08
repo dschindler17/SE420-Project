@@ -6,29 +6,30 @@ CDEFS=
 CFLAGS= -O0 -g $(INCLUDE_DIRS) $(CDEFS)
 LIBS=
 
-HFILES=  brighten.h
-CFILES= brighten.c luminosityGray.c PSFBlur.c pipeline.c pipeTest.c
+HFILES=  eagleEye.h
+CFILES1= read_write.c luminosityGray.c PSFBlur.c  pipeline.c eagleEyeApp.c
+CFILES2= read_write.c luminosityGray.c PSFBlur.c  pipeline.c pipeTest.c blurTest.c grayTest.c readLatencyTest.c testDriver.c transformLatencyTest.c  readWriteTest.c invalidLocation.c invalidType.c
 
 SRCS= ${HFILES} ${CFILES}
-OBJS= ${CFILES:.c=.o}
+OBJS1= ${CFILES1:.c=.o}
+OBJS2= ${CFILES2:.c=.o}
 
-all:	pipeTest brightc.asm
+all:	EagleEye
 
 clean:
-	-rm -f *.o *.d brighter*.ppm brightc.asm gray*.ppm
-	-rm -f pipeline
+	-rm -f *.o *.d *Test*.ppm  new*.ppm
+	-rm -f testDriver EagleEye
 
-distclean:
-	-rm -f *.o *.d
+imgclean:
+	-rm -f *Test*.ppm
 
-imagetest:	${OBJS}
-	$(CC) $(LDFLAGS) $(CFLAGS) -o $@ $(OBJS) $(LIBS)
+EagleEye:	${OBJS1}
+	$(CC) $(LDFLAGS) $(CFLAGS) -o $@ $(OBJS1) $(LIBS)
 	
-pipeTest:	${OBJS}
-	$(CC) $(LDFLAGS) $(CFLAGS) -o $@ $(OBJS) $(LIBS)
+testDriver:	${OBJS2} 
+	$(CC) $(LDFLAGS) $(CFLAGS) -o $@ $(OBJS2) $(LIBS)
+	
 
-brightc.asm: brightc.c
-	$(CC) -O0 -S $< -o $@
 
 depend:
 
