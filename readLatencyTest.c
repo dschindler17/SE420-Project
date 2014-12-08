@@ -2,14 +2,9 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
-
-#include "eagleEye.h"
 #include <sys/time.h>
 #include <sys/types.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <string.h>
+
 
 #include "eagleEye.h"
 
@@ -24,9 +19,9 @@ void readLatencyTest()
   unsigned long long int microsecs;
 
   
-  // TEST CASE #0
+  // TEST CASE 
   //
-  // Basic PPM file read
+  // Basic PPM file read test
   //
   printf("Read Latency Test\n");
   for(caseNumber = 1; caseNumber < 50; caseNumber++)
